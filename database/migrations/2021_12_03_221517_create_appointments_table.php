@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,12 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class);
+            $table->string('postcode');
+            $table->dateTime('date');
+            $table->double('duration')->default(60);
+            $table->time('departure_time')->nullable();
+            $table->time('arrival_time')->nullable();
             $table->timestamps();
         });
     }
