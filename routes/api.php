@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login', [ApiController::class, 'authenticate'])->name('authenticate');
-Route::post('register', [ApiController::class, 'register'])->name('register');
-Route::group(['middleware' => ['jwt.verify']], function (){
-   Route::get('logout', [ApiController::class, 'logout'])->name('logout');
-   Route::get('get_user', [ApiController::class, 'get_user'])->name('get_user');
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
