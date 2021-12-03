@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [ApiController::class, 'authenticate'])->name('authenticate');
+Route::post('register', [ApiController::class, 'register'])->name('register');
+Route::group(['middleware' => ['jwt.verify']], function (){
+   Route::get('logout', [ApiController::class, 'logout'])->name('logout');
+   Route::get('get_user', [ApiController::class, 'get_user'])->name('get_user');
 });
