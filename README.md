@@ -5,7 +5,7 @@ This Laravel API project is prepared for a software company based in UK in consi
 ### Features
 - [JWT Authentication](https://jwt-auth.readthedocs.io/en/develop/) system with bearer token
 - 'Repository Pattern' as a layer abstraction implemented instead of Laravel's default 'Active Record Pattern'
-- Interacting two different APIs 
+- Interacting two different APIs
   - <a href="https://developers.google.com/maps/documentation/distance-matrix/overview" target="_blank">Google's Distance Matrix API</a>
   - <a href="https://postcodes.io/" target="_blank">Postcodes.io's Postcode and Geolocation API for the UK</a>
 ### Installing Project
