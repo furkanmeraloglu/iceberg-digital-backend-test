@@ -9,8 +9,18 @@ use Illuminate\Support\Carbon;
 class Appointment extends Model
 {
     use HasFactory;
-
-    protected $iceberg_post_code = 'cm27pj';
+    protected $fillable = [
+      'postcode',
+      'home_postcode',
+      'distance',
+      'date',
+      'duration',
+      'departure_time',
+      'arrival_time'
+    ];
+    protected $guarded = [
+      'id'
+    ];
     protected $casts = [
         'departure_time' => 'date:hh:mm',
         'arrival_time' => 'date:hh:mm',
@@ -24,9 +34,5 @@ class Appointment extends Model
     public function contacts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Contact::class);
-    }
-    public function getHomePostCodeAttribute(): string
-    {
-        return $this->iceberg_post_code;
     }
 }

@@ -19,8 +19,10 @@ class CreateAppointmentsTable extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->string('postcode');
+            $table->string('home_postcode')->default('cm27pj');
+            $table->double('distance')->nullable();
             $table->dateTime('date');
-            $table->double('duration')->default(60);
+            $table->double('duration')->default(60); // The default value for the appointment duration is 60 minutes
             $table->time('departure_time')->nullable();
             $table->time('arrival_time')->nullable();
             $table->timestamps();
