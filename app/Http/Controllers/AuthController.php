@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\LoginUserRequest;
 
 
 class AuthController extends Controller
@@ -16,23 +18,10 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function register(Request $request): \Illuminate\Http\JsonResponse
+    public function register(RegisterUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        ]);
-        // User Data Validation in AuthRegisterRequest class.
-        if ($validator->fails())
-        {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
         $user = User::create(array_merge(
-            $validator->validated(),
+            $request->validated(),
             ['password' => bcrypt($request->password)]
         ));
         return response()->json([
@@ -41,25 +30,15 @@ class AuthController extends Controller
         ], 201);
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function login(LoginUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6'
-        ]);
-        if ($validator->fails())
-        {
-            return response()->json($validator->errors()->toJson(), 422);
-        }
-        if (! $token = auth()->attempt($validator->validated()))
+        if (! $token = auth()->attempt($request->validated()))
         {
             return response()->json(['error' => 'User credentials do not match'], 401);
         }
         return $this->createNewToken($token);
     }
+
     public function logout(): \Illuminate\Http\JsonResponse
     {
         auth()->logout();

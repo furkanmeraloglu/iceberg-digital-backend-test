@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\Eloquent;
+namespace App\Repository\Repositories;
 
 use App\Repository\AppointmentRepositoryInterface;
 use App\Models\Appointment;
