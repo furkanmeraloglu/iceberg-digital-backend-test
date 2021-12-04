@@ -2,6 +2,11 @@
 
 namespace App\Http\Requests;
 
+use ArondeParon\RequestSanitizer\Sanitizers\FilterVars;
+use ArondeParon\RequestSanitizer\Sanitizers\Lowercase;
+use ArondeParon\RequestSanitizer\Sanitizers\RemoveNumeric;
+use ArondeParon\RequestSanitizer\Sanitizers\Trim;
+use ArondeParon\RequestSanitizer\Traits\SanitizesInputs;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -9,21 +14,19 @@ use Illuminate\Http\JsonResponse;
 
 class RegisterUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    use SanitizesInputs;
+
     public function authorize() : bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+    protected $sanitizers = [
+        'name' => [FilterVars::class => ['filter' => FILTER_SANITIZE_STRING]],
+        'email' => [Lowercase::class, Trim::class, FilterVars::class => ['filter' => FILTER_SANITIZE_EMAIL]],
+        'password' => [Trim::class]
+    ];
+
     public function rules(): array
     {
         return [
@@ -32,10 +35,12 @@ class RegisterUserRequest extends FormRequest
             'password' => 'required|string|confirmed|min:6',
         ];
     }
+
     protected function failedValidation(Validator $validator) : JsonResponse
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
+
     public function messages(): array
     {
         return [
