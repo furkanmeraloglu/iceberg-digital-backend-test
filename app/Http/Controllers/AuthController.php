@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\Interfaces\UserRepositoryInterface;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,14 +14,17 @@ use App\Http\Requests\LoginUserRequest;
 
 class AuthController extends Controller
 {
-    public function __construct()
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->userRepository = $userRepository;
     }
 
     public function register(RegisterUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $user = User::create(array_merge(
+        $user = $this->userRepository->create(array_merge(
             $request->validated(),
             ['password' => bcrypt($request->password)]
         ));
