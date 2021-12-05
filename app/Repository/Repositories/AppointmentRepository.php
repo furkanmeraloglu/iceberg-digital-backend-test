@@ -5,11 +5,9 @@ namespace App\Repository\Repositories;
 
 use App\Models\Appointment;
 use App\Repository\Interfaces\AppointmentRepositoryInterface;
-use App\Support\PostcodeApi;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use JustSteveKing\LaravelPostcodes\Facades\Postcode;
-use phpDocumentor\Reflection\Types\Integer;
 
 class AppointmentRepository implements AppointmentRepositoryInterface
 {
@@ -21,43 +19,42 @@ class AppointmentRepository implements AppointmentRepositoryInterface
         }
         return Appointment::orderBy('created_at', 'DESC')->get();
     }
-
     public function create(array $attributes): Model
     {
         return Appointment::create($attributes);
     }
-
     public function update($id, array $attributes): Model
     {
         $appointment = Appointment::findOrFail($id);
         $appointment->update($attributes);
         return $appointment;
     }
-
     public function delete($id): bool
     {
         return Appointment::findOrFail($id)->delete();
     }
-
     public function getContactId($id) : int
     {
         return Appointment::findOrFail($id)->contact_id;
     }
-
     public function validateDestinationPostcode($postcode)
     {
         return Postcode::validate($postcode);
     }
-
-    public function getDestinationCoordinates($postcode)
+    public function getOriginLatitude($home_postcode = 'cm27pj')
     {
-        if ($this->validateDestinationPostcode($postcode)) {
-            return Postcode::getPostcode($postcode);
-        }
+         return Postcode::getPostcode($home_postcode)->latitude;
     }
-
-    public function getOriginCoordinates($home_postcode = 'cm27pj')
+    public function getOriginLongitude($home_postcode = 'cm27pj')
     {
-        return Postcode::getPostcode($home_postcode = 'cm27pj');
+        return Postcode::getPostcode($home_postcode)->longitude;
+    }
+    public function getDestinationLatitude($postcode)
+    {
+        return Postcode::getPostcode($this->validateDestinationPostcode($postcode))->latitude;
+    }
+    public function getDestinationLongitude($postcode)
+    {
+        return Postcode::getPostcode($this->validateDestinationPostcode($postcode))->longitude;
     }
 }

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
-use App\Models\Appointment;
-use App\Models\Contact;
 use App\Repository\Interfaces\AppointmentRepositoryInterface;
 use App\Repository\Interfaces\ContactRepositoryInterface;
 use App\Support\DistanceMatrixApi;
 use App\Support\PostcodeApi;
+use App\Support\GoogleDistanceMatrixApi;
 use Illuminate\Http\JsonResponse;
 
 class AppointmentController extends Controller
