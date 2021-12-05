@@ -9,8 +9,8 @@ class Contact extends Model
 {
     use HasFactory;
 
-    public function appointments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function appointments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(Appointment::class);
+        return $this->hasMany(Appointment::class);
     }
 }

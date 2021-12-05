@@ -31,8 +31,8 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function contacts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsToMany(Contact::class);
+        return $this->belongsTo(Contact::class);
     }
 }
