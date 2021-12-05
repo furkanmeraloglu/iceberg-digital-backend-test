@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Repository\Interfaces\AppointmentRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Integer;
 
 class AppointmentRepository implements AppointmentRepositoryInterface
 {
@@ -33,5 +34,10 @@ class AppointmentRepository implements AppointmentRepositoryInterface
     public function delete($id): bool
     {
         return Appointment::findOrFail($id)->delete();
+    }
+
+    public function getContactId($id): Integer
+    {
+        return Appointment::findOrFail($id)->contact()->id;
     }
 }

@@ -10,16 +10,18 @@ class Appointment extends Model
 {
     use HasFactory;
     protected $fillable = [
-      'postcode',
-      'home_postcode',
-      'distance',
-      'date',
-      'duration',
-      'departure_time',
-      'arrival_time'
+        'user_id',
+        'contact_id',
+        'postcode',
+        'home_postcode',
+        'distance',
+        'date',
+        'duration',
+        'departure_time',
+        'arrival_time'
     ];
     protected $guarded = [
-      'id'
+        'id'
     ];
     protected $casts = [
         'departure_time' => 'date:hh:mm',

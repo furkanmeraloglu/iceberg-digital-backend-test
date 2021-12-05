@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repository\Interfaces\UserRepositoryInterface;
-use http\Env\Response;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 

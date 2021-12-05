@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
 
         $contact1 = new Contact();
-        $contact1->name = 'Büşra Yurt';
+        $contact1->name = 'Bill Gates';
         $contact1->email = 'billgates@mail.com';
         $contact1->phone = +905555555555;
         $contact1->save();
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $appointment1->save();
 
         $contact2 = new Contact();
-        $contact2->name = 'Arda Yurt';
+        $contact2->name = 'Jonathan Reinink';
         $contact2->email = 'jonathanreinink@mail.com';
         $contact2->phone = +905555555554;
         $contact2->save();

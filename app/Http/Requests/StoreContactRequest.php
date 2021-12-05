@@ -31,7 +31,7 @@ class StoreContactRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|regex:/(01)[0-9]{9}+/|min:10'
+            'phone' => 'required|min:10'
         ];
     }
 

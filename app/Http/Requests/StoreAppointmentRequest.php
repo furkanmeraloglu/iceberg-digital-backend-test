@@ -31,7 +31,7 @@ class StoreAppointmentRequest extends FormRequest
             'date' => 'required|date',
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|regex:/(01)[0-9]{9}+/|min:10',
+            'phone' => 'required|min:10',
         ];
     }
     protected function failedValidation(Validator $validator) : JsonResponse

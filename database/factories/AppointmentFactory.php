@@ -17,6 +17,9 @@ class AppointmentFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->id,
             'postcode' => strtoupper($this->faker->bothify('??##??')),
+            'contact_name' => $this->faker->name(),
+            'contact_phone' => $this->faker->phoneNumber(),
+            'contact_email' => $this->faker->unique()->safeEmail(),
             'date' => $this->faker->dateTime('now', null),
             'duration' => 60,
             'departure_time' => $this->faker->time('H:i'),

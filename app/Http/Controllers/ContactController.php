@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
 use App\Models\Contact;
+use App\Repository\Interfaces\ContactRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 
 class ContactController extends Controller
 {
+    protected $contactRepository;
+
+    public function __construct(ContactRepositoryInterface $contactRepository)
+    {
+        $this->contactRepository = $contactRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,46 +27,18 @@ class ContactController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreContactRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreContactRequest $request
+     * @return JsonResponse
      */
-    public function store(StoreContactRequest $request)
+    public function store(StoreContactRequest $request): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contact $contact)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Contact $contact)
-    {
-        //
+        $contact = $this->contactRepository->create($request->validated());
+        return response()->json([
+            'message' => 'Contact successfully created',
+            'contact' => $contact
+        ], 201);
     }
 
     /**
