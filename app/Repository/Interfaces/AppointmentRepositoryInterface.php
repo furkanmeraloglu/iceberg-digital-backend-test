@@ -12,5 +12,5 @@ interface AppointmentRepositoryInterface
     public function create(array $attributes) : Model;
     public function update($id, array $attributes) : Model;
     public function delete($id) : bool;
-    public function getContactId($id) : Integer;
+    public function getContactId($id) : int;
 }

@@ -22,7 +22,8 @@ class ContactRepository implements ContactRepositoryInterface
     public function update($id, array $attributes): Model
     {
         $contact = Contact::findOrFail($id);
-        return $contact->update($attributes);
+        $contact->update($attributes);
+        return $contact;
     }
 
     public function delete($id): bool

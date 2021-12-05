@@ -28,7 +28,8 @@ class AppointmentRepository implements AppointmentRepositoryInterface
     public function update($id, array $attributes): Model
     {
         $appointment = Appointment::findOrFail($id);
-        return $appointment->update($attributes);
+        $appointment->update($attributes);
+        return $appointment;
     }
 
     public function delete($id): bool
@@ -36,8 +37,9 @@ class AppointmentRepository implements AppointmentRepositoryInterface
         return Appointment::findOrFail($id)->delete();
     }
 
-    public function getContactId($id): Integer
+    public function getContactId($id) : int
     {
-        return Appointment::findOrFail($id)->contact()->id;
+        /*dd(Appointment::findOrFail($id)->contact_id);*/
+        return Appointment::findOrFail($id)->contact_id;
     }
 }
