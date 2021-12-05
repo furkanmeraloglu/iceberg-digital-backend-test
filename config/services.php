@@ -34,4 +34,6 @@ return [
         'url' => env('POSTCODES_URL', 'https://api.postcodes.io/')
     ],
 
+    'home_postcode' => ['cm27pj']
+
 ];
