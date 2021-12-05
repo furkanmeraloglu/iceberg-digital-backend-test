@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrixServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'DistanceMatrix' => TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix::class,
     ],
 
 ];

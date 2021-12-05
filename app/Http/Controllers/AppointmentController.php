@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Contact;
 use App\Repository\Interfaces\AppointmentRepositoryInterface;
 use App\Repository\Interfaces\ContactRepositoryInterface;
+use App\Support\DistanceMatrixApi;
 use App\Support\PostcodeApi;
 use Illuminate\Http\JsonResponse;
 

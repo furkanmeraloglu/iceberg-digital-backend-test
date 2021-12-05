@@ -13,6 +13,7 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "teampickr/php-google-maps-distance-matrix": "^0.6.0",
         "tymon/jwt-auth": "^1.0.0-beta.3@dev"
     },
     "require-dev": {
