@@ -34,6 +34,7 @@ return [
         'url' => env('POSTCODES_URL', 'https://api.postcodes.io/')
     ],
 
+    'google_maps_key' => ['GOOGLE_MAPS_KEY', 'AIzaSyCAcdMVTS5tap4HjiV3zuX9oUgSioDJYVY'],
     'home_postcode' => ['cm27pj']
 
 ];
