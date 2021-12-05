@@ -5,11 +5,9 @@ namespace App\Repository\Repositories;
 
 use App\Models\Appointment;
 use App\Repository\Interfaces\AppointmentRepositoryInterface;
-use App\Support\PostcodeApi;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use JustSteveKing\LaravelPostcodes\Facades\Postcode;
-use phpDocumentor\Reflection\Types\Integer;
 
 class AppointmentRepository implements AppointmentRepositoryInterface
 {
@@ -53,10 +51,10 @@ class AppointmentRepository implements AppointmentRepositoryInterface
     }
     public function getDestinationLatitude($postcode)
     {
-        return Postcode::getPostcode($postcode)->latitude;
+        return Postcode::getPostcode($this->validateDestinationPostcode($postcode))->latitude;
     }
     public function getDestinationLongitude($postcode)
     {
-        return Postcode::getPostcode($postcode)->longitude;
+        return Postcode::getPostcode($this->validateDestinationPostcode($postcode))->longitude;
     }
 }
