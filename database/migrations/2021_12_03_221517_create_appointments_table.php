@@ -18,6 +18,7 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Contact::class);
             $table->string('postcode');
             $table->string('home_postcode')->default('cm27pj');
             $table->double('distance')->nullable();
