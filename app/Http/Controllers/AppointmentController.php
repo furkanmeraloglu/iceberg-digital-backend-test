@@ -78,11 +78,11 @@ class AppointmentController extends Controller
         $contact_id = $this->appointmentRepository->getContactId($id);
         $contact = $this->contactRepository->update($contact_id, $request->validated());
         $appointment = $this->appointmentRepository->update($id, array_merge(
-            ['user_id' => auth()->user()->id],
             ['contact_id' => $contact->id],
+            ['user_id' => auth()->user()->id],
             ['distance' => $this->calculateDistance($request->postcode)],
             ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-            ['should_arrive_at' => $this->calculateArrivalTime($request->plannet_at, $request->postcode)],
+            ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
             $request->validated()
         ));
         return response()->json([

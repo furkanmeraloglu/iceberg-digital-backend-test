@@ -19,7 +19,7 @@ class UpdateAppointmentRequest extends FormRequest
         'postcode' => [Trim::class, Lowercase::class, FilterVars::class => ['filter' => FILTER_SANITIZE_STRING]],
         'name' => [FilterVars::class => ['filter' => FILTER_SANITIZE_STRING]],
         'email' => [Lowercase::class, Trim::class, FilterVars::class => ['filter' => FILTER_SANITIZE_EMAIL]],
-        'phone' => [Trim::class, FilterVars::class => ['filter' => FILTER_SANITIZE_STRING]]
+        'phone' => [Trim::class, FilterVars::class => ['filter' => FILTER_SANITIZE_STRING]],
     ];
     public function authorize(): bool
     {
@@ -29,13 +29,13 @@ class UpdateAppointmentRequest extends FormRequest
     {
         return [
             'postcode' => 'required|string|min:4',
-            'date' => 'required|date',
+            'planned_at' => 'required|date',
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|min:10',
         ];
     }
-    protected function failedValidation(Validator $validator) : JsonResponse
+    protected function failedValidation(Validator $validator): JsonResponse
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
