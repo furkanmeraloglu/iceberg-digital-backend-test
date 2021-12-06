@@ -37,8 +37,9 @@
             @endif
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="pt-8 sm:justify-start">
-                    <h1 class="dark:text-white"> Iceberg Digital Real Estate Project</h1><br>
+                    <h1 class="dark:text-white"> Iceberg Digital Real Estate Project</h1>
                     <h2 class="dark:text-white">By Furkan Meraloğlu</h2>
+                    <h5><a class="dark:text-white" href="https://github.com/furkanmeraloglu/iceberg-digital-backend-test">GitHub Link</a></h5>
                 </div>
             </div>
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
