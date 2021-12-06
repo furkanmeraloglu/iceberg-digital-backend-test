@@ -16,6 +16,6 @@ This Laravel API project is prepared for a software company based in UK in consi
 - Run the migrations and database seeding `php artisan migrate --seed`
 ### Associated Links
 - [For the project's Postman Collection](https://go.postman.co/workspace/My-Workspace~cf6eba9b-ab34-4d49-84d8-9f5415340bad/collection/15711465-bcecf1b9-47ba-4078-89e9-8b0159674c91)
-- [For the project's Heroku deployment](#)
+- [For the project's Heroku deployment](https://whispering-ravine-51058.herokuapp.com/api)
 
 
