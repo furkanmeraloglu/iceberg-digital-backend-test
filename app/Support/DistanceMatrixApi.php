@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Carbon;
 use TeamPickr\DistanceMatrix\DistanceMatrix;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 
@@ -21,10 +22,12 @@ class DistanceMatrixApi
         $elements = $rows[0]->elements();
         $element = $elements[0];
         $distanceText = $element->distanceText();
+        $duration = $element->duration();
         $durationText = $element->durationText();
         return response()->json([
-            'distance' => $distanceText,
-            'duration' => $durationText
+            'duration' => $duration,
+            'distanceText' => $distanceText,
+            'durationText' => $durationText
         ]);
     }
 }
