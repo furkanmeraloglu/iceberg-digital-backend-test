@@ -2,7 +2,12 @@
 
 ### About the Project
 This Laravel API project is prepared for a software company based in UK in consideration with the backend web developer recruitment process.
-
+A user can register and login the system by filling out the necessary credentials to get API token for authentication. After the successful
+authentication process user can list all appointments registered on the system, create a new appointment, update formerly created appointment
+or delete an appointment. The API will automatically calculate the distance between user's predefined location and the location 
+where the appointment will be held. Together with the distance calculation, API also gives expected departure time to the appointment's location
+and arrival time to the predefined location after appointment finished. To do so, this API interacts two outsource services: [Postcodes.io](#) and 
+[Google Distance Matrix API](#).
 ### Features
 - [JWT Authentication](https://jwt-auth.readthedocs.io/en/develop/) system with bearer token
 - 'Repository Pattern' as a layer abstraction implemented instead of Laravel's default 'Active Record Pattern'
