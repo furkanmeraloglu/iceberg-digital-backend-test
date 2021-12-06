@@ -9,7 +9,13 @@ use App\Repository\Interfaces\ContactRepositoryInterface;
 use App\Support\DistanceMatrixApi;
 use App\Support\PostcodeApi;
 use App\Support\GoogleDistanceMatrixApi;
+use DateInterval;
+use DateTime;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
+use Ramsey\Uuid\Type\Time;
 
 class AppointmentController extends Controller
 {
@@ -30,8 +36,6 @@ class AppointmentController extends Controller
      */
     public function index($filter = null): JsonResponse
     {
-        $response = DistanceMatrixApi::getDistanceAndDuration('51.6562', '-1.069876');
-        dd($response->original['duration']);
         $appointments = $this->appointmentRepository->getAll($filter = null);
         return response()->json([
             'appointments' => $appointments
@@ -51,6 +55,8 @@ class AppointmentController extends Controller
             ['contact_id' => $contact->id],
             ['user_id' => auth()->user()->id],
             ['distance' => $this->calculateDistance($request->postcode)],
+            ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
+            ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
             $request->validated()
         ));
         return response()->json([
@@ -65,6 +71,7 @@ class AppointmentController extends Controller
      * @param UpdateAppointmentRequest $request
      * @param $id
      * @return JsonResponse
+     * @throws Exception
      */
     public function update(UpdateAppointmentRequest $request, $id): JsonResponse
     {
@@ -73,6 +80,9 @@ class AppointmentController extends Controller
         $appointment = $this->appointmentRepository->update($id, array_merge(
             ['user_id' => auth()->user()->id],
             ['contact_id' => $contact->id],
+            ['distance' => $this->calculateDistance($request->postcode)],
+            ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
+            ['should_arrive_at' => $this->calculateArrivalTime($request->plannet_at, $request->postcode)],
             $request->validated()
         ));
         return response()->json([
@@ -101,5 +111,34 @@ class AppointmentController extends Controller
         $destLon = $this->appointmentRepository->getDestinationLongitude($postcode);
         $response = DistanceMatrixApi::getDistanceAndDuration($destLat, $destLon);
         return $response->original['distanceText'];
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function calculateDepartureTime($planned_at, $postcode) : Carbon
+    {
+        $time = new Carbon(new DateTime($planned_at));
+        return $time->subSeconds($this->getDuration($postcode));
+    }
+    // 21:46 fixed
+    // 20:08 Sub
+    // 23:26 Add
+
+    /**
+     * @throws Exception
+     */
+    private function calculateArrivalTime($planned_at, $postcode) : Carbon
+    {
+        $seconds = $this->getDuration($postcode) + 3600; // Adding default value of appointment duration to travel duration.
+        $time = new Carbon(new DateTime($planned_at));
+        return $time->addSeconds($seconds);
+    }
+    private function getDuration($postcode)
+    {
+        $destLat = $this->appointmentRepository->getDestinationLatitude($postcode);
+        $destLon = $this->appointmentRepository->getDestinationLongitude($postcode);
+        $response = DistanceMatrixApi::getDistanceAndDuration($destLat, $destLon);
+        return $response->original['duration'];
     }
 }

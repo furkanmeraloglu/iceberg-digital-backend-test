@@ -15,18 +15,18 @@ class Appointment extends Model
         'postcode',
         'home_postcode',
         'distance',
-        'date',
+        'planned_at',
         'duration',
-        'departure_time',
-        'arrival_time'
+        'should_depart_at',
+        'should_arrive_at'
     ];
     protected $guarded = [
         'id'
     ];
     protected $casts = [
-        'departure_time' => 'date:hh:mm',
-        'arrival_time' => 'date:hh:mm',
-        'date' => 'date',
+        'planned_at' => 'date:Y-m-d H:i:s',
+        'should_arrive_at' => 'date:H:i',
+        'should_depart_at' => 'date:H:i'
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

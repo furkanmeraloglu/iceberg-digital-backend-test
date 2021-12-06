@@ -28,7 +28,7 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             'postcode' => 'required|string|min:4',
-            'date' => 'required|date',
+            'planned_at' => 'required',
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|min:10',
