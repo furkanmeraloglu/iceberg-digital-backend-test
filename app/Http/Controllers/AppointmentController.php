@@ -30,6 +30,8 @@ class AppointmentController extends Controller
      */
     public function index($filter = null): JsonResponse
     {
+        $response = DistanceMatrixApi::getDistanceAndDuration('51.6562', '-1.069876');
+        dd($response->original['duration']);
         $appointments = $this->appointmentRepository->getAll($filter = null);
         return response()->json([
             'appointments' => $appointments
@@ -48,6 +50,7 @@ class AppointmentController extends Controller
         $appointment = $this->appointmentRepository->create(array_merge(
             ['contact_id' => $contact->id],
             ['user_id' => auth()->user()->id],
+            ['distance' => $this->calculateDistance($request->postcode)],
             $request->validated()
         ));
         return response()->json([
@@ -90,5 +93,13 @@ class AppointmentController extends Controller
         return response()->json([
             'message' => 'Appointment successfully deleted',
         ], 202);
+    }
+
+    private function calculateDistance($postcode) : string
+    {
+        $destLat = $this->appointmentRepository->getDestinationLatitude($postcode);
+        $destLon = $this->appointmentRepository->getDestinationLongitude($postcode);
+        $response = DistanceMatrixApi::getDistanceAndDuration($destLat, $destLon);
+        return $response->original['distanceText'];
     }
 }

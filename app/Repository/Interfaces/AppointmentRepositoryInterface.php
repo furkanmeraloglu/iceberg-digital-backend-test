@@ -14,7 +14,6 @@ interface AppointmentRepositoryInterface
     public function update($id, array $attributes) : Model;
     public function delete($id) : bool;
     public function getContactId($id) : int;
-    public function validateDestinationPostcode($postcode);
     public function getDestinationLatitude($postcode);
     public function getDestinationLongitude($postcode);
 }

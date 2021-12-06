@@ -37,16 +37,12 @@ class AppointmentRepository implements AppointmentRepositoryInterface
     {
         return Appointment::findOrFail($id)->contact_id;
     }
-    public function validateDestinationPostcode($postcode)
-    {
-        return Postcode::validate($postcode);
-    }
     public function getDestinationLatitude($postcode)
     {
-        return Postcode::getPostcode($this->validateDestinationPostcode($postcode))->latitude;
+        return Postcode::getPostcode($postcode)->latitude;
     }
     public function getDestinationLongitude($postcode)
     {
-        return Postcode::getPostcode($this->validateDestinationPostcode($postcode))->longitude;
+        return Postcode::getPostcode($postcode)->longitude;
     }
 }
