@@ -7,15 +7,11 @@ use App\Http\Requests\UpdateAppointmentRequest;
 use App\Repository\Interfaces\AppointmentRepositoryInterface;
 use App\Repository\Interfaces\ContactRepositoryInterface;
 use App\Support\DistanceMatrixApi;
-use App\Support\PostcodeApi;
-use App\Support\GoogleDistanceMatrixApi;
-use DateInterval;
 use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Date;
-use Ramsey\Uuid\Type\Time;
 
 class AppointmentController extends Controller
 {
@@ -34,8 +30,9 @@ class AppointmentController extends Controller
      * @param null $filter
      * @return JsonResponse
      */
-    public function index($filter = null): JsonResponse
+    public function index(Request $request): JsonResponse
     {
+        $filter = $request->query('filter', 'DESC');
         $appointments = $this->appointmentRepository->getAll($filter = null);
         return response()->json([
             'appointments' => $appointments
