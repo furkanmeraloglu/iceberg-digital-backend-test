@@ -13,7 +13,7 @@ class AppointmentRepository implements AppointmentRepositoryInterface
 {
     public function getAll($filter = null): Collection
     {
-        if ($filter === 'ASC')
+        if ($filter === 'ASC' || $filter === 'asc')
         {
             return Appointment::orderBy('created_at', 'ASC')->get();
         }

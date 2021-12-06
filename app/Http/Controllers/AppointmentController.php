@@ -32,9 +32,8 @@ class AppointmentController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $filter = $request->query('filter', 'DESC');
-        $filter = $request->query('ASC', 'DESC');
-        $appointments = $this->appointmentRepository->getAll($filter = null);
+        $query = $request->input('filter');
+        $appointments = $this->appointmentRepository->getAll($query);
         return response()->json([
             'appointments' => $appointments
         ]);
