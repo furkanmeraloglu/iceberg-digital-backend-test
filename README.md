@@ -8,14 +8,14 @@ or delete an appointment. The API will automatically calculate the distance betw
 where the appointment will be held. Together with the distance calculation, API also gives expected departure time to the appointment's location
 and arrival time to the predefined location after appointment finished. To do so, this API interacts two outsource services: [Postcodes.io](#) and 
 [Google Distance Matrix API](#).
----
+
 ## Features
 - [JWT Authentication](https://jwt-auth.readthedocs.io/en/develop/) system with bearer token
 - 'Repository Pattern' as a layer abstraction implemented instead of Laravel's default 'Active Record Pattern'
 - Interacting two different APIs
   - <a href="https://developers.google.com/maps/documentation/distance-matrix/overview" target="_blank">Google's Distance Matrix API</a>
   - <a href="https://postcodes.io/" target="_blank">Postcodes.io's Postcode and Geolocation API for the UK</a>
----
+
 ## Installing Project
 - Clone the git repository: `git clone git@github.com:furkanmeraloglu/iceberg-digital-backend-test.git`
 - Modify the `.env` file configure your database settings.
@@ -23,11 +23,11 @@ and arrival time to the predefined location after appointment finished. To do so
 - Install project dependencies with `composer install` and update if necessary `composer update`
 - Generate the secret JWT key for initial auth token `php artisan jwt:secret`
 - Run the migrations and seed the database `php artisan migrate --seed`
----
+
 ## Associated Links
 - [For the project's Postman Collection](https://go.postman.co/workspace/My-Workspace~cf6eba9b-ab34-4d49-84d8-9f5415340bad/collection/15711465-bcecf1b9-47ba-4078-89e9-8b0159674c91)
 - [For the project's Heroku deployment](https://whispering-ravine-51058.herokuapp.com)
----
+
 ## API Documentation
 ### Resource Description and API Endpoints
 
