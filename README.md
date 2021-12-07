@@ -39,12 +39,12 @@ and arrival time to the predefined location after appointment finished. To do so
 
 ***Body Form-Data Parameters***
 
-| Key | Value |
-| ----------- | ----------- |
-| name |string |
-| email |email |
-| password |password |
-| password_confirmation |password |    
+| Key | Type | Value |
+| ----------- | ----------- | ---------|
+| name |string | Furkan Meraloğlu |
+| email |email | furkanmeraloglu@gmail.com |
+| password |password | furkanmeraloglu | 
+| password_confirmation |password | furkanmeraloglu |
 
 Example: `https://whispering-ravine-51058.herokuapp.com/api/auth/register`
 
@@ -66,10 +66,10 @@ Example: `https://whispering-ravine-51058.herokuapp.com/api/auth/register`
     	POST				/auth/login
 ***Body Form-Data Parameters***
 
-| Key | Value |
-| ----------- | ----------- |
-| email |email |
-| password |password |
+| Key | Type | Value |
+| ----------- | ----------- | ---------- | 
+| email |email | furkanmeraloglu@gmail.com |
+| password |password | furkanmeraloglu |
 
 Example: `https://whispering-ravine-51058.herokuapp.com/api/auth/login`
 
