@@ -49,19 +49,26 @@ class AppointmentController extends Controller
     public function store(StoreAppointmentRequest $request): JsonResponse
     {
         return DB::transaction(function () use($request) {
-            $contact = $this->contactRepository->create($request->validated());
-            $appointment = $this->appointmentRepository->create(array_merge(
-                ['contact_id' => $contact->id],
-                ['user_id' => auth()->user()->id],
-                ['distance' => $this->calculateDistance($request->postcode)],
-                ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-                ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
-                $request->validated()
-            ));
-            return response()->json([
-                'message' => 'Appointment successfully created',
-                'appointment' => $appointment
-            ], 201);
+            try {
+                $contact = $this->contactRepository->create($request->validated());
+                $appointment = $this->appointmentRepository->create(array_merge(
+                    ['contact_id' => $contact->id],
+                    ['user_id' => auth()->user()->id],
+                    ['distance' => $this->calculateDistance($request->postcode)],
+                    ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
+                    ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
+                    $request->validated()
+                ));
+                return response()->json([
+                    'message' => 'Appointment successfully created',
+                    'appointment' => $appointment
+                ], 201);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'message' => 'Error occurred. Please try again.',
+                    'error' => $th->getMessage(),
+                ]);
+            }
         });
     }
 
@@ -76,20 +83,27 @@ class AppointmentController extends Controller
     public function update(UpdateAppointmentRequest $request, $id): JsonResponse
     {
         return DB::transaction(function () use($request, $id) {
-            $contact_id = $this->appointmentRepository->getContactId($id);
-            $contact = $this->contactRepository->update($contact_id, $request->validated());
-            $appointment = $this->appointmentRepository->update($id, array_merge(
-                ['contact_id' => $contact->id],
-                ['user_id' => auth()->user()->id],
-                ['distance' => $this->calculateDistance($request->postcode)],
-                ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-                ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
-                $request->validated()
-            ));
-            return response()->json([
-                'message' => 'Appointment successfully updated',
-                'appointment' => $appointment
-            ],200);
+            try {
+                $contact_id = $this->appointmentRepository->getContactId($id);
+                $contact = $this->contactRepository->update($contact_id, $request->validated());
+                $appointment = $this->appointmentRepository->update($id, array_merge(
+                    ['contact_id' => $contact->id],
+                    ['user_id' => auth()->user()->id],
+                    ['distance' => $this->calculateDistance($request->postcode)],
+                    ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
+                    ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
+                    $request->validated()
+                ));
+                return response()->json([
+                    'message' => 'Appointment successfully updated',
+                    'appointment' => $appointment
+                ],200);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'message' => 'Error occurred. Please try again.',
+                    'error' => $th->getMessage(),
+                ]);
+            }
         });
     }
 
