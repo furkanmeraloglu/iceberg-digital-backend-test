@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
@@ -47,19 +48,21 @@ class AppointmentController extends Controller
      */
     public function store(StoreAppointmentRequest $request): JsonResponse
     {
-        $contact = $this->contactRepository->create($request->validated());
-        $appointment = $this->appointmentRepository->create(array_merge(
-            ['contact_id' => $contact->id],
-            ['user_id' => auth()->user()->id],
-            ['distance' => $this->calculateDistance($request->postcode)],
-            ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-            ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
-            $request->validated()
-        ));
-        return response()->json([
-            'message' => 'Appointment successfully created',
-            'appointment' => $appointment
-        ], 201);
+        return DB::transaction(function () use($request) {
+            $contact = $this->contactRepository->create($request->validated());
+            $appointment = $this->appointmentRepository->create(array_merge(
+                ['contact_id' => $contact->id],
+                ['user_id' => auth()->user()->id],
+                ['distance' => $this->calculateDistance($request->postcode)],
+                ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
+                ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
+                $request->validated()
+            ));
+            return response()->json([
+                'message' => 'Appointment successfully created',
+                'appointment' => $appointment
+            ], 201);
+        });
     }
 
     /**
@@ -72,20 +75,22 @@ class AppointmentController extends Controller
      */
     public function update(UpdateAppointmentRequest $request, $id): JsonResponse
     {
-        $contact_id = $this->appointmentRepository->getContactId($id);
-        $contact = $this->contactRepository->update($contact_id, $request->validated());
-        $appointment = $this->appointmentRepository->update($id, array_merge(
-            ['contact_id' => $contact->id],
-            ['user_id' => auth()->user()->id],
-            ['distance' => $this->calculateDistance($request->postcode)],
-            ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-            ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
-            $request->validated()
-        ));
-        return response()->json([
-            'message' => 'Appointment successfully updated',
-            'appointment' => $appointment
-        ],200);
+        return DB::transaction(function () use($request, $id) {
+            $contact_id = $this->appointmentRepository->getContactId($id);
+            $contact = $this->contactRepository->update($contact_id, $request->validated());
+            $appointment = $this->appointmentRepository->update($id, array_merge(
+                ['contact_id' => $contact->id],
+                ['user_id' => auth()->user()->id],
+                ['distance' => $this->calculateDistance($request->postcode)],
+                ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
+                ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
+                $request->validated()
+            ));
+            return response()->json([
+                'message' => 'Appointment successfully updated',
+                'appointment' => $appointment
+            ],200);
+        });
     }
 
     /**
