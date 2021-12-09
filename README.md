@@ -198,7 +198,7 @@ Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments?filter=
 | name |string | Contact Name |
 | phone |string | Contact Phone |
 | email |email | Contact Email |
-| postcode |string | Appointment Email |
+| postcode |string | Appointment Postcode |
 | planned_at |dateTime (YYYY-MM-DD HH:MM | Appointment Date |
 
 Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments`
@@ -237,7 +237,7 @@ Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments`
 | name |string | Contact Name |
 | phone |string | Contact Phone |
 | email |email | Contact Email |
-| postcode |string | Appointment Email |
+| postcode |string | Appointment Postcode |
 | planned_at |dateTime (YYYY-MM-DD HH:MM | Appointment Date |
 
 Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments/1`
