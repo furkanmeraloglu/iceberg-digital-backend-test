@@ -1,8 +1,5 @@
 <?php
 
 it('works', function () {
-   expect(true)->toBeTrue();
+    expect(true)->toBeTrue();
 });
-
-
-
