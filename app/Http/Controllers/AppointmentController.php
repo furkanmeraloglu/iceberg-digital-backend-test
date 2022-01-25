@@ -28,7 +28,7 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param null $filter
+     * @param Request $request
      * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
