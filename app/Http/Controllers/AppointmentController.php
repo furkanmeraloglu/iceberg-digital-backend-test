@@ -54,9 +54,9 @@ class AppointmentController extends Controller
                 $appointment = $this->appointmentRepository->create(array_merge(
                     ['contact_id' => $contact->id],
                     ['user_id' => auth()->user()->id],
-                    ['distance' => $this->calculateDistance($request->postcode)],
-                    ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-                    ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
+                    ['distance' => $this->appointmentRepository->calculateDistance($request->postcode)],
+                    ['should_depart_at' => $this->appointmentRepository->calculateDepartureTime($request->planned_at, $request->postcode)],
+                    ['should_arrive_at' => $this->appointmentRepository->calculateArrivalTime($request->planned_at, $request->postcode)],
                     $request->validated()
                 ));
                 return response()->json([
@@ -89,9 +89,9 @@ class AppointmentController extends Controller
                 $appointment = $this->appointmentRepository->update($id, array_merge(
                     ['contact_id' => $contact->id],
                     ['user_id' => auth()->user()->id],
-                    ['distance' => $this->calculateDistance($request->postcode)],
-                    ['should_depart_at' => $this->calculateDepartureTime($request->planned_at, $request->postcode)],
-                    ['should_arrive_at' => $this->calculateArrivalTime($request->planned_at, $request->postcode)],
+                    ['distance' => $this->appointmentRepository->calculateDistance($request->postcode)],
+                    ['should_depart_at' => $this->appointmentRepository->calculateDepartureTime($request->planned_at, $request->postcode)],
+                    ['should_arrive_at' => $this->appointmentRepository->calculateArrivalTime($request->planned_at, $request->postcode)],
                     $request->validated()
                 ));
                 return response()->json([
@@ -119,42 +119,5 @@ class AppointmentController extends Controller
         return response()->json([
             'message' => 'Appointment successfully deleted',
         ], 202);
-    }
-
-    private function calculateDistance($postcode) : string
-    {
-        $destLat = $this->appointmentRepository->getDestinationLatitude($postcode);
-        $destLon = $this->appointmentRepository->getDestinationLongitude($postcode);
-        $response = DistanceMatrixApi::getDistanceAndDuration($destLat, $destLon);
-        return $response->original['distanceText'];
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function calculateDepartureTime($planned_at, $postcode) : Carbon
-    {
-        $time = new Carbon(new DateTime($planned_at));
-        return $time->subSeconds($this->getDuration($postcode));
-    }
-    // 21:46 fixed
-    // 20:08 Sub
-    // 23:26 Add
-
-    /**
-     * @throws Exception
-     */
-    private function calculateArrivalTime($planned_at, $postcode) : Carbon
-    {
-        $seconds = $this->getDuration($postcode) + 3600; // Adding default value of appointment duration to travel duration.
-        $time = new Carbon(new DateTime($planned_at));
-        return $time->addSeconds($seconds);
-    }
-    private function getDuration($postcode)
-    {
-        $destLat = $this->appointmentRepository->getDestinationLatitude($postcode);
-        $destLon = $this->appointmentRepository->getDestinationLongitude($postcode);
-        $response = DistanceMatrixApi::getDistanceAndDuration($destLat, $destLon);
-        return $response->original['duration'];
     }
 }
