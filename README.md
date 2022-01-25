@@ -25,7 +25,7 @@ and arrival time to the predefined location after appointment finished. To do so
 - Run the migrations and seed the database `php artisan migrate --seed`
 
 ## Associated Links
-- [For the project's Postman Collection](https://go.postman.co/workspace/My-Workspace~cf6eba9b-ab34-4d49-84d8-9f5415340bad/collection/15711465-bcecf1b9-47ba-4078-89e9-8b0159674c91)
+- [For the project's Postman Collection](https://www.postman.com/galactic-flare-427401/workspace/public/collection/15711465-bcecf1b9-47ba-4078-89e9-8b0159674c91)
 - [For the project's Heroku deployment](https://whispering-ravine-51058.herokuapp.com)
 
 ## API Documentation
@@ -198,7 +198,7 @@ Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments?filter=
 | name |string | Contact Name |
 | phone |string | Contact Phone |
 | email |email | Contact Email |
-| postcode |string | Appointment Email |
+| postcode |string | Appointment Postcode |
 | planned_at |dateTime (YYYY-MM-DD HH:MM | Appointment Date |
 
 Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments`
@@ -237,7 +237,7 @@ Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments`
 | name |string | Contact Name |
 | phone |string | Contact Phone |
 | email |email | Contact Email |
-| postcode |string | Appointment Email |
+| postcode |string | Appointment Postcode |
 | planned_at |dateTime (YYYY-MM-DD HH:MM | Appointment Date |
 
 Example: `https://whispering-ravine-51058.herokuapp.com/api/appointments/1`
