@@ -44,7 +44,7 @@ class RegisterUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => w'Name field is required!',
+            'name.required' => 'Name field is required!',
             'email.required' => 'Email field is required!',
             'password.required' => 'Password field is required!',
             'password.confirmed' => 'Password credentials not match!',
