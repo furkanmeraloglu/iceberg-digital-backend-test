@@ -16,7 +16,7 @@ use Tests\CreatesApplication;
 */
 
 uses(TestCase::class, CreatesApplication::class, RefreshDatabase::class)
-    ->in(__DIR__);
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
