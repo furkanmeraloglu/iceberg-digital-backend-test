@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Models\User;
 
 test('registered user can login', function () {
+
     $this->post(action([AuthController::class, 'register']), [
         'name' => "Mahmut Test",
         'email' => "mahmut@test.com",
