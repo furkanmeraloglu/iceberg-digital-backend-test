@@ -15,6 +15,7 @@ and arrival time to the predefined location after appointment finished. To do so
 - Interacting two different APIs
   - <a href="https://developers.google.com/maps/documentation/distance-matrix/overview" target="_blank">Google's Distance Matrix API</a>
   - <a href="https://postcodes.io/" target="_blank">Postcodes.io's Postcode and Geolocation API for the UK</a>
+- [PEST](https://pestphp.com/) test suite applied to the project and all Authentication and Appointment operations tested. 
 
 ## Installing Project
 - Clone the git repository: `git clone git@github.com:furkanmeraloglu/iceberg-digital-backend-test.git`
